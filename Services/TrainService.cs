@@ -14,9 +14,9 @@ namespace TicketReservation.Services
 
     public TrainService(IOptions<MongoDBSettings> mongoDBSettings)
     {
-        MongoClient client = new MongoClient(mongoDBSettings.Value.ConnectionString);
-        IMongoDatabase database = client.GetDatabase(mongoDBSettings.Value.DatabaseName);
-        _trains = database.GetCollection<Train>(mongoDBSettings.Value.CollectionName);
+       MongoClient client = new MongoClient(mongoDBSettings.Value.ConnectionString);
+    IMongoDatabase database = client.GetDatabase("New1");
+    _trains = database.GetCollection<Train>("Train");
     }
 
     public async Task CreateAsync(Train train)
@@ -49,7 +49,8 @@ namespace TicketReservation.Services
             .Set("To", train.To)
             .Set("DepartureTime", train.DepartureTime)
             .Set("ArrivalTime", train.ArrivalTime)
-            .Set("IsActive", train.IsActive);
+            .Set("IsActive", train.IsActive)
+            .Set("ImageURL", train.ImageURL);
         await _trains.UpdateOneAsync(filter, update);
     }
 

@@ -1,16 +1,31 @@
 using TicketReservation.Models;
 using TicketReservation.Services;
-
-
-
-
-
 var builder = WebApplication.CreateBuilder(args);
 
+
+
+
+
+builder.Services.AddCors(options =>
+{
+  options.AddPolicy("AllowSpecificOrigin", builder =>
+  {
+      builder
+          .WithOrigins("http://localhost:3000") // Replace with the allowed origin(s)
+          .AllowAnyMethod()
+          .AllowAnyHeader();
+  });
+});
+
+
+
 builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDB"));
+builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("TrainDB"));
 builder.Services.AddSingleton<MongoDBService>();
 builder.Services.AddSingleton<TrainService>();
 builder.Services.AddSingleton<AdminUserService>();
+builder.Services.AddSingleton<BookingService>();
+
 
 // Add services to the container.
 
@@ -27,6 +42,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("AllowSpecificOrigin");
 
 app.UseHttpsRedirection();
 
