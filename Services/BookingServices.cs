@@ -47,8 +47,7 @@ namespace TicketReservation.Services
                 .Set("Bookdate", bookingDetails.Bookdate)
                 .Set("From", bookingDetails.From)
                 .Set("To", bookingDetails.To)
-                .Set("Traintime", bookingDetails.Traintime)
-                .Set("IsActive", bookingDetails.IsActive);
+                .Set("Traintime", bookingDetails.Traintime);
             await _bookingDetails.UpdateOneAsync(filter, update);
         }
 
