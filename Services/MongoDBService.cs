@@ -9,9 +9,9 @@ public class MongoDBService {
     private readonly IMongoCollection<User> _users;
 
     public MongoDBService(IOptions<MongoDBSettings> mongoDBSettings) {
-        MongoClient client = new MongoClient(mongoDBSettings.Value.ConnectionString);
-        IMongoDatabase database = client.GetDatabase(mongoDBSettings.Value.DatabaseName);
-        _users = database.GetCollection<User>(mongoDBSettings.Value.CollectionName);
+       MongoClient client = new MongoClient(mongoDBSettings.Value.ConnectionString);
+    IMongoDatabase database = client.GetDatabase("New2"); // Use MongoDB.DatabaseName
+    _users = database.GetCollection<User>("Users"); // Use MongoDB.CollectionName
     }
 
     public async Task CreateAsync(User user) {

@@ -23,5 +23,7 @@ namespace TicketReservation.Models
         public string ArrivalTime { get; set; } = null!;
 
         public string IsActive { get; set; } = null!;
+
+        public string? ImageURL { get; set; } = null!;
     }
 }
