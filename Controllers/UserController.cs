@@ -34,7 +34,7 @@ public class UserController : Controller {
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] User user) {
-        var user1 = await _mongoDBService.loginAsync(user.Email, user.Password);
+        var user1 = await _mongoDBService.loginAsync(user.Nic, user.Password);
         if (user1 == null) {
             return NotFound();
         }
@@ -53,6 +53,14 @@ public class UserController : Controller {
         await _mongoDBService.UpdateUserAsync(id, user);
         return NoContent();
     }
+
+    //write a method to get a user by id
+
+    [HttpGet("{id}")]
+    public async Task<User> Get(string id) {
+        return await _mongoDBService.GetUserByIdAsync(id);
+    }
+    
 
 
 

@@ -15,15 +15,25 @@ public class MongoDBService {
     }
 
     public async Task CreateAsync(User user) {
-        await _users.InsertOneAsync(user);
+        //check if user nic is already in the database
+        var filter = Builders<User>.Filter.Eq("Nic", user.Nic);
+        var user1 = await _users.Find(filter).FirstOrDefaultAsync();
+        if (user1 != null) {
+            Console.WriteLine("User already exists");
+            return;
+        }else{
+            Console.WriteLine("User does not exist");
+            await _users.InsertOneAsync(user);
         Console.WriteLine("User created");
+        }
+        
         return;
     }
 
 
-    public async Task<User> loginAsync(string email  , string password) {
+    public async Task<User> loginAsync(string nic  , string password) {
         Console.WriteLine("User login");
-        var filter = Builders<User>.Filter.Eq("Email", email) & Builders<User>.Filter.Eq("Password", password);
+        var filter = Builders<User>.Filter.Eq("Nic", nic) & Builders<User>.Filter.Eq("Password", password);
         return await _users.Find(filter).FirstOrDefaultAsync();
 
     }
@@ -37,14 +47,12 @@ public class MongoDBService {
 
     }
 
-    // public async Task AddUserAsync ( string id, string userId) {
-    //     FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
-    //     UpdateDefinition<User> update = Builders<User>.Update.AddToSet<string>("userId", userId);
-    //     await _users.UpdateOneAsync(filter, update);
-    //     return;
-    // }
+    public async Task<User> GetUserByIdAsync(string id) {
+        Console.WriteLine($"Getting user by ID: {id}");
+        var filter = Builders<User>.Filter.Eq("Id", id);
+        return await _users.Find(filter).FirstOrDefaultAsync();
+    }
 
-    //write a method to update a user details
     public async Task UpdateUserAsync(string id, User user) {
         FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
         UpdateDefinition<User> update = Builders<User>.Update.Set("Username", user.Username).Set("Password", user.Password).Set("Email", user.Email).Set("Nic", user.Nic).Set("Active", user.Active);
