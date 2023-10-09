@@ -17,7 +17,9 @@ public class User {
 
     public string Email { get; set; } = null!;
 
-    public string Role { get; set; } = null!;
+    public string Nic { get; set; } = null!;
+
+    public bool Active { get; set; } = true;
 
 
 }

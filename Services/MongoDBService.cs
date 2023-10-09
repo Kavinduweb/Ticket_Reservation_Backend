@@ -47,7 +47,7 @@ public class MongoDBService {
     //write a method to update a user details
     public async Task UpdateUserAsync(string id, User user) {
         FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
-        UpdateDefinition<User> update = Builders<User>.Update.Set("Username", user.Username).Set("Password", user.Password).Set("Email", user.Email).Set("Role", user.Role);
+        UpdateDefinition<User> update = Builders<User>.Update.Set("Username", user.Username).Set("Password", user.Password).Set("Email", user.Email).Set("Nic", user.Nic).Set("Active", user.Active);
         await _users.UpdateOneAsync(filter, update);
         return;
     }
@@ -57,5 +57,21 @@ public class MongoDBService {
         await _users.DeleteOneAsync(filter);
         return;
     }
+
+    //deactivate or reactivate user
+    public async Task DeactivateAsync(string id) {
+        FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
+        UpdateDefinition<User> update = Builders<User>.Update.Set("Active", false);
+        await _users.UpdateOneAsync(filter, update);
+        return;
+    }
+    
+    public async Task ActivateAsync(string id){
+        FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
+        UpdateDefinition<User> update = Builders<User>.Update.Set("Active", true);
+        await _users.UpdateOneAsync(filter, update);
+        return;
+    }
+    
     
 }
