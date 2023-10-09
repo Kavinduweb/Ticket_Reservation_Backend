@@ -9,9 +9,9 @@ public class AdminUserService {
     private readonly IMongoCollection<Admin> _admins;
 
     public AdminUserService(IOptions<MongoDBSettings> mongoDBSettings) {
-        MongoClient client = new MongoClient(mongoDBSettings.Value.ConnectionString);
-        IMongoDatabase database = client.GetDatabase(mongoDBSettings.Value.DatabaseName);
-        _admins = database.GetCollection<Admin>(mongoDBSettings.Value.CollectionName);
+               MongoClient client = new MongoClient(mongoDBSettings.Value.ConnectionString);
+    IMongoDatabase database = client.GetDatabase("New3"); // Use MongoDB.DatabaseName
+    _admins = database.GetCollection<Admin>("Admin"); // Use MongoDB.CollectionName
     }
 
     public async Task CreateAsync(Admin admin) {
