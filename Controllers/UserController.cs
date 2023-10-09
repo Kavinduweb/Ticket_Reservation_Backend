@@ -62,6 +62,20 @@ public class UserController : Controller {
         return NoContent();
     }
 
+    //code to deactivate a user
+       [HttpPut("deactivate/{id}")]
+    public async Task<IActionResult> Deactivate(string id) {
+        await _mongoDBService.DeactivateAsync(id);
+        return NoContent();
+    }
+
+    //code to activate a user
+       [HttpPut("activate/{id}")]
+    public async Task<IActionResult> Activate(string id) {
+        await _mongoDBService.ActivateAsync(id);
+        return NoContent();
+    }   
+
 
 
 }
