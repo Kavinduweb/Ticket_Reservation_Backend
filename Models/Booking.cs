@@ -20,6 +20,6 @@ namespace TicketReservation.Models
 
         public string Traintime { get; set; } = null!;
 
-        public string IsActive { get; set; } = null!;
+        public bool IsActive { get; set; } = true;
     }
 }

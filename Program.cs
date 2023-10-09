@@ -6,15 +6,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 
-  builder.Services.AddCors(options =>
+builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin", builder =>
-    {
-        builder
-            .WithOrigins("http://localhost:3000") // Replace with the allowed origin(s)
-            .AllowAnyMethod()
-            .AllowAnyHeader();
-    });
+  options.AddPolicy("AllowSpecificOrigin", builder =>
+  {
+      builder
+          .WithOrigins("http://localhost:3000") // Replace with the allowed origin(s)
+          .AllowAnyMethod()
+          .AllowAnyHeader();
+  });
 });
 
 
@@ -23,6 +23,7 @@ builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("Mo
 builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("TrainDB"));
 builder.Services.AddSingleton<MongoDBService>();
 builder.Services.AddSingleton<TrainService>();
+builder.Services.AddSingleton<BookingService>();
 
 
 // Add services to the container.
