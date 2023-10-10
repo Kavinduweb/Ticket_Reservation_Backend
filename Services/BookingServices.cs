@@ -15,7 +15,7 @@ namespace TicketReservation.Services
         public BookingService(IOptions<MongoDBSettings> mongoDBSettings)
         {
             MongoClient client = new MongoClient(mongoDBSettings.Value.ConnectionString);
-            IMongoDatabase database = client.GetDatabase("New4"); // Use MongoDB.DatabaseName
+            IMongoDatabase database = client.GetDatabase("TrainGoDB"); // Use MongoDB.DatabaseName
             _bookingDetails = database.GetCollection<BookingDetails>("Bookings"); // Use MongoDB.CollectionName
         }
 

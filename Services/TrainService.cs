@@ -8,57 +8,57 @@ using System.Threading.Tasks;
 
 namespace TicketReservation.Services
 {
-  public class TrainService
-{
-    private readonly IMongoCollection<Train> _trains;
-
-    public TrainService(IOptions<MongoDBSettings> mongoDBSettings)
+    public class TrainService
     {
-       MongoClient client = new MongoClient(mongoDBSettings.Value.ConnectionString);
-    IMongoDatabase database = client.GetDatabase("New1");
-    _trains = database.GetCollection<Train>("Train");
-    }
+        private readonly IMongoCollection<Train> _trains;
 
-    public async Task CreateAsync(Train train)
-    {
-        await _trains.InsertOneAsync(train);
-        Console.WriteLine("Train created");
-    }
+        public TrainService(IOptions<MongoDBSettings> mongoDBSettings)
+        {
+            MongoClient client = new MongoClient(mongoDBSettings.Value.ConnectionString);
+            IMongoDatabase database = client.GetDatabase("TrainGoDB");
+            _trains = database.GetCollection<Train>("Train");
+        }
 
-    public async Task<List<Train>> GetTrainsAsync()
-    {
-        Console.WriteLine("Getting all trains");
-        return await _trains.Find(new BsonDocument()).ToListAsync();
-    }
+        public async Task CreateAsync(Train train)
+        {
+            await _trains.InsertOneAsync(train);
+            Console.WriteLine("Train created");
+        }
 
-    public async Task<Train> GetTrainByIdAsync(string id)
-    {
-        Console.WriteLine($"Getting train by ID: {id}");
-        var filter = Builders<Train>.Filter.Eq("Id", id);
-        return await _trains.Find(filter).FirstOrDefaultAsync();
-    }
+        public async Task<List<Train>> GetTrainsAsync()
+        {
+            Console.WriteLine("Getting all trains");
+            return await _trains.Find(new BsonDocument()).ToListAsync();
+        }
 
-    public async Task UpdateTrainAsync(string id, Train train)
-    {
-        Console.WriteLine($"Updating train with ID: {id}");
-        FilterDefinition<Train> filter = Builders<Train>.Filter.Eq("Id", id);
-        UpdateDefinition<Train> update = Builders<Train>.Update
-            .Set("TrainName", train.TrainName)
-            .Set("Type", train.Type)
-            .Set("From", train.From)
-            .Set("To", train.To)
-            .Set("DepartureTime", train.DepartureTime)
-            .Set("ArrivalTime", train.ArrivalTime)
-            .Set("IsActive", train.IsActive)
-            .Set("ImageURL", train.ImageURL);
-        await _trains.UpdateOneAsync(filter, update);
-    }
+        public async Task<Train> GetTrainByIdAsync(string id)
+        {
+            Console.WriteLine($"Getting train by ID: {id}");
+            var filter = Builders<Train>.Filter.Eq("Id", id);
+            return await _trains.Find(filter).FirstOrDefaultAsync();
+        }
 
-    public async Task DeleteAsync(string id)
-    {
-        Console.WriteLine($"Deleting train with ID: {id}");
-        FilterDefinition<Train> filter = Builders<Train>.Filter.Eq("Id", id);
-        await _trains.DeleteOneAsync(filter);
+        public async Task UpdateTrainAsync(string id, Train train)
+        {
+            Console.WriteLine($"Updating train with ID: {id}");
+            FilterDefinition<Train> filter = Builders<Train>.Filter.Eq("Id", id);
+            UpdateDefinition<Train> update = Builders<Train>.Update
+                .Set("TrainName", train.TrainName)
+                .Set("Type", train.Type)
+                .Set("From", train.From)
+                .Set("To", train.To)
+                .Set("DepartureTime", train.DepartureTime)
+                .Set("ArrivalTime", train.ArrivalTime)
+                .Set("IsActive", train.IsActive)
+                .Set("ImageURL", train.ImageURL);
+            await _trains.UpdateOneAsync(filter, update);
+        }
+
+        public async Task DeleteAsync(string id)
+        {
+            Console.WriteLine($"Deleting train with ID: {id}");
+            FilterDefinition<Train> filter = Builders<Train>.Filter.Eq("Id", id);
+            await _trains.DeleteOneAsync(filter);
+        }
     }
-}
 }
