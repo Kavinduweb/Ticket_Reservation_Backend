@@ -35,6 +35,12 @@ namespace TicketReservation.Controllers
             return Ok(bookingDetails);
         }
 
+        [HttpGet("mybookings/{CusId}")]
+        public async Task<List<BookingDetails>> GetByUserID(string CusId)
+        {
+            return await _bookingService.GetBookingDetailsByUserIdAsync(CusId);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] BookingDetails bookingDetails)
         {

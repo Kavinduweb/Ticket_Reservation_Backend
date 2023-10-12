@@ -12,6 +12,8 @@ namespace TicketReservation.Models
 
         public string CusName { get; set; } = null!;
 
+        public string CusId { get; set; } = null!;
+
         public string Bookdate { get; set; } = null!;
 
         public string From { get; set; } = null!;
@@ -19,5 +21,15 @@ namespace TicketReservation.Models
         public string To { get; set; } = null!;
 
         public string Traintime { get; set; } = null!;
+
+        public string NoOfTickets { get; set; } = null!;
+
+        public string Total { get; set; } = null!;
+
+        public string TrainId { get; set; } = null!;
+
+        public string TrainName { get; set; } = null!;
+
+        public string Status { get; set; } = "Pending";
     }
 }
