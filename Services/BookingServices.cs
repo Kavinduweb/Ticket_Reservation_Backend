@@ -52,12 +52,14 @@ namespace TicketReservation.Services
             FilterDefinition<BookingDetails> filter = Builders<BookingDetails>.Filter.Eq("Id", id);
             UpdateDefinition<BookingDetails> update = Builders<BookingDetails>.Update
                 .Set("CusName", bookingDetails.CusName)
+                .Set("CusNIC", bookingDetails.CusNIC)
                 .Set("CusId", bookingDetails.CusId)
                 .Set("Bookdate", bookingDetails.Bookdate)
                 .Set("From", bookingDetails.From)
                 .Set("To", bookingDetails.To)
                 .Set("Traintime", bookingDetails.Traintime)
                 .Set("NoOfTickets", bookingDetails.NoOfTickets)
+                .Set("TrainClass", bookingDetails.TrainClass)
                 .Set("Total", bookingDetails.Total)
                 .Set("TrainId", bookingDetails.TrainId)
                 .Set("TrainName", bookingDetails.TrainName)
