@@ -63,6 +63,7 @@ namespace TicketReservation.Services
                 .Set("Total", bookingDetails.Total)
                 .Set("TrainId", bookingDetails.TrainId)
                 .Set("TrainName", bookingDetails.TrainName)
+                .Set("BookedDate", bookingDetails.BookedDate)
                 .Set("Status", bookingDetails.Status);
             await _bookingDetails.UpdateOneAsync(filter, update);
         }
