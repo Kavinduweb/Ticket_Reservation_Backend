@@ -1,9 +1,14 @@
+/*
+   File Name: Program.cs
+   Author: S.A.V.J. Senadeera - IT20219420
+   Description: This file contains the configuration and setup code for the TicketReservation API.
+    It configures the services, dependencies, and endpoints, including CORS, MongoDB settings, and Swagger documentation.
+
+*/
+
 using TicketReservation.Models;
 using TicketReservation.Services;
 var builder = WebApplication.CreateBuilder(args);
-
-
-
 
 
 builder.Services.AddCors(options =>

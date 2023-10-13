@@ -1,3 +1,12 @@
+/*
+   File Name: BookingDetails.cs
+   Author: W.W.L.K.G. Wanigasinghe - IT20218744
+   Description: This file contains the definition of the BookingDetails class
+   , which represents booking details in the TicketReservation system. 
+   It includes properties for identifying booking details, 
+   customer information, booking date, travel details, and payment information.
+*/
+
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Text.Json.Serialization;

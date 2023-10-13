@@ -1,3 +1,13 @@
+/*
+   File Name: BookingService.cs
+   Author: [Your Name]
+   Description: This file contains the implementation of the BookingService class
+   , which serves as the service component responsible for booking-related operations
+    in the TicketReservation API. It acts as an intermediary between the 
+    BookingController and the MongoDB database, facilitating functions 
+    for creating, retrieving, updating, and deleting booking details.
+*/
+
 using TicketReservation.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
@@ -15,22 +25,25 @@ namespace TicketReservation.Services
         public BookingService(IOptions<MongoDBSettings> mongoDBSettings)
         {
             MongoClient client = new MongoClient(mongoDBSettings.Value.ConnectionString);
-            IMongoDatabase database = client.GetDatabase("TrainGoDB"); // Use MongoDB.DatabaseName
-            _bookingDetails = database.GetCollection<BookingDetails>("Bookings"); // Use MongoDB.CollectionName
+            IMongoDatabase database = client.GetDatabase("TrainGoDB"); 
+            _bookingDetails = database.GetCollection<BookingDetails>("Bookings"); 
         }
 
+// Create a new reservation in the TrainGoDB
         public async Task CreateAsync(BookingDetails bookingDetails)
         {
             await _bookingDetails.InsertOneAsync(bookingDetails);
             Console.WriteLine("Booking Added Successfully");
         }
 
+// Retrieve the list of all created reservations
         public async Task<List<BookingDetails>> GetBookingsAsync()
         {
             Console.WriteLine("Getting all Bookings");
             return await _bookingDetails.Find(new BsonDocument()).ToListAsync();
         }
 
+// Retrieve a specific reservation by ID
         public async Task<BookingDetails> GetBookingDetailsByIdAsync(string id)
         {
             Console.WriteLine($"Getting Booking by ID: {id}");
@@ -38,6 +51,7 @@ namespace TicketReservation.Services
             return await _bookingDetails.Find(filter).FirstOrDefaultAsync();
         }
 
+// Retrieve a specific reservation by customer ID
         public async Task<List<BookingDetails>> GetBookingDetailsByUserIdAsync(string CusId)
         {
             Console.WriteLine($"Getting Booking by User ID: {CusId}");
@@ -46,6 +60,7 @@ namespace TicketReservation.Services
             return await _bookingDetails.Find(filter).ToListAsync();
         }
 
+// Update a specific reservation details using reservation ID
         public async Task UpdateBookingAsync(string id, BookingDetails bookingDetails)
         {
             Console.WriteLine($"Updating Booking Details with ID: {id}");
@@ -68,6 +83,8 @@ namespace TicketReservation.Services
             await _bookingDetails.UpdateOneAsync(filter, update);
         }
 
+
+// Delete a specific reservation by ID
         public async Task DeleteAsync(string id)
         {
             Console.WriteLine($"Deleting Booking with ID: {id}");

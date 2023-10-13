@@ -1,3 +1,12 @@
+/*
+   File Name: BookingController.cs
+   Author: [Your Name]
+   Description: This file contains the implementation of the BookingController class
+   , which serves as the controller for booking-related operations in the TicketReservation API.
+    It provides endpoints for managing bookings, including retrieval, creation, updating, and deletion.
+
+ */
+
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -18,12 +27,15 @@ namespace TicketReservation.Controllers
             _bookingService = bookingService;
         }
 
+
+//  GET: api/booking - Retrieve a list of all bookings
         [HttpGet]
         public async Task<List<BookingDetails>> Get()
         {
             return await _bookingService.GetBookingsAsync();
         }
 
+//  GET: api/booking/{id} - Retrieve a specific booking by id
         [HttpGet("{id}")]
         public async Task<ActionResult<BookingDetails>> Get(string id)
         {
@@ -35,12 +47,15 @@ namespace TicketReservation.Controllers
             return Ok(bookingDetails);
         }
 
+//  GET: api/booking/mybookings/{CusId} - Retrieve a specific booking by customer id
+
         [HttpGet("mybookings/{CusId}")]
         public async Task<List<BookingDetails>> GetByUserID(string CusId)
         {
             return await _bookingService.GetBookingDetailsByUserIdAsync(CusId);
         }
 
+// POST: api/booking - Create a new ticket booking 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] BookingDetails bookingDetails)
         {
@@ -48,6 +63,7 @@ namespace TicketReservation.Controllers
             return CreatedAtAction(nameof(Get), new { id = bookingDetails.Id }, bookingDetails);
         }
 
+// PUT: api/booking/{id} - Update a specific booking details
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(string id, [FromBody] BookingDetails bookingDetails)
         {
@@ -55,6 +71,7 @@ namespace TicketReservation.Controllers
             return NoContent();
         }
 
+// DELETE: api/booking/{id} - Delete a specific booking
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {

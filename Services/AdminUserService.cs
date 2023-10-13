@@ -1,3 +1,11 @@
+/*
+   File Name: AdminUserService.cs
+     Author: G.U.L.K.Perera - IT20236250
+   Description: This file contains the implementation of the AdminUserService class
+   , which serves as the service component for admin user-related operations in the
+    TicketReservation API. It acts as an intermediary between the AdminController and the MongoDB database,
+     facilitating functions for creating, retrieving, updating, and deleting admin user details, as well as login functionality.
+*/
 using TicketReservation.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
@@ -12,8 +20,8 @@ public class AdminUserService
     public AdminUserService(IOptions<MongoDBSettings> mongoDBSettings)
     {
         MongoClient client = new MongoClient(mongoDBSettings.Value.ConnectionString);
-        IMongoDatabase database = client.GetDatabase("TrainGoDB"); // Use MongoDB.DatabaseName
-        _admins = database.GetCollection<Admin>("Admin"); // Use MongoDB.CollectionName
+        IMongoDatabase database = client.GetDatabase("TrainGoDB"); 
+        _admins = database.GetCollection<Admin>("Admin"); 
     }
 
     public async Task CreateAsync(Admin admin)
