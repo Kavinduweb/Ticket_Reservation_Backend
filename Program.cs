@@ -21,7 +21,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDB"));
 builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("TrainDB"));
-builder.Services.AddSingleton<MongoDBService>();
+builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<TrainService>();
 builder.Services.AddSingleton<AdminUserService>();
 builder.Services.AddSingleton<BookingService>();

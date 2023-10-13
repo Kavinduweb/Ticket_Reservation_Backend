@@ -1,3 +1,11 @@
+/*
+   File Name: TrainController.cs
+   Author: G.A.H.A. Nethmini - IT20106874
+   Description: This file contains the implementation of the TrainController class
+    ,which serves as the controller for train-related operations in the TicketReservation API
+    .It provides endpoints for managing trains, including retrieval, creation, updating, and deletion.
+*/
+
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -18,12 +26,14 @@ public class TrainController : ControllerBase
         _trainService = trainService;
     }
 
+//  GET: api/trains - Retrieve a list of all trains
     [HttpGet]
     public async Task<List<Train>> Get()
     {
         return await _trainService.GetTrainsAsync();
     }
 
+    // GET: api/trains/{id} - Retrieve a specific train by id
     [HttpGet("{id}")]
     public async Task<ActionResult<Train>> Get(string id)
     {
@@ -35,6 +45,7 @@ public class TrainController : ControllerBase
         return Ok(train);
     }
 
+    // POST: api/trains - Create a new train for users to book
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] Train train)
     {
@@ -42,6 +53,7 @@ public class TrainController : ControllerBase
         return CreatedAtAction(nameof(Get), new { id = train.Id }, train);
     }
 
+    // PUT: api/trains/{id} - Update a specific train details
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(string id, [FromBody] Train train)
     {
@@ -49,6 +61,7 @@ public class TrainController : ControllerBase
         return NoContent();
     }
 
+    // DELETE: api/trains/{id} - Delete a specific train
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(string id)
     {
